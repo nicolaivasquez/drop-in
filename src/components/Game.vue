@@ -1,11 +1,16 @@
 <template>
   <div class="row" v-for="row in arr(rows)">
-    <div class="cell" v-for="col in arr(columns)"></div>
+    <cell v-for="col in arr(columns)" v-bind:col="col" v-bind:row="row"></cell>
   </div>
 </template>
 
 <script>
+import Cell from './Cell';
+
 export default {
+  components: {
+    Cell,
+  },
   data() {
     return {
       rows: 6,
@@ -28,13 +33,6 @@ export default {
 <style scoped>
 h1 {
   color: #42b983;
-}
-
-.cell {
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  border: 1px solid black;
 }
 
 .row {
