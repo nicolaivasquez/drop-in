@@ -1,11 +1,12 @@
 <template>
-  <div class="row" v-for="row in arr(rows)">
-    <cell v-for="col in arr(columns)" v-bind:col="col" v-bind:row="row"></cell>
+  <div class="row" v-for="row in arr(private.rows)">
+    <cell v-for="col in arr(private.columns)" v-bind:col="col" v-bind:row="row"></cell>
   </div>
 </template>
 
 <script>
 import Cell from './Cell';
+import store from '../store';
 
 export default {
   components: {
@@ -13,8 +14,11 @@ export default {
   },
   data() {
     return {
-      rows: 6,
-      columns: 6,
+      private: {
+        rows: 6,
+        columns: 6,
+      },
+      shared: store.state,
     };
   },
   methods: {
