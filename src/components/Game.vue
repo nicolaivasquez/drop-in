@@ -1,6 +1,6 @@
 <template>
-  <div class="row" v-for="row in arr(private.rows)">
-    <cell v-for="col in arr(private.columns)" v-bind:col="col" v-bind:row="row"></cell>
+  <div class="row" v-for="row in arr(shared.start.rows)">
+    <cell v-for="col in arr(shared.start.columns)" v-bind:col="col" v-bind:row="row"></cell>
   </div>
 </template>
 
@@ -14,10 +14,7 @@ export default {
   },
   data() {
     return {
-      private: {
-        rows: 6,
-        columns: 6,
-      },
+      private: {},
       shared: store.state,
     };
   },

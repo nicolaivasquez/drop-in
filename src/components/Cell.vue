@@ -1,5 +1,5 @@
 <template>
-  <div class="cell" v-bind:class="{ 'selected': isActive }"></div>
+  <div class="cell" v-bind:class="{ 'selected': isActive }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview"></div>
 </template>
 <style>
   .cell {
@@ -15,6 +15,7 @@
 </style>
 <script>
   import store from '../store';
+  import dropIn from '../dropIn';
 
   export default{
     props: [
@@ -37,6 +38,14 @@
           row: this.row,
           col: this.col,
         });
+      },
+    },
+    methods: {
+      previewColumn() {
+        dropIn.previewColumn(this.col);
+      },
+      removePreview() {
+        dropIn.removePreview(this.col);
       },
     },
   };
