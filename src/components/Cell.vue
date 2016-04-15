@@ -1,5 +1,8 @@
 <template>
-  <div class="cell" v-bind:class="{ 'selected': isActive }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview"></div>
+  <div class="cell" v-bind:class="{ 'selected': isSelected }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview" v-on:click="selectColumn">
+    <div class="active" v-if="isActive"></div>
+    <div class="ghost" v-if="isGhost"></div>
+  </div>
 </template>
 <style>
   .cell {
@@ -11,6 +14,26 @@
 
   .selected {
     background: red;
+  }
+
+  .active {
+    width: 30px;
+    height: 30px;
+    background: black;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    margin: 5px;
+  }
+
+  .ghost {
+    width: 30px;
+    height: 30px;
+    border: 1px dotted black;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    margin: 5px;
   }
 </style>
 <script>
@@ -33,8 +56,20 @@
     components: {
     },
     computed: {
-      isActive() {
+      isSelected() {
         return store.isSelected({
+          row: this.row,
+          col: this.col,
+        });
+      },
+      isActive() {
+        return store.isActive({
+          row: this.row,
+          col: this.col,
+        });
+      },
+      isGhost() {
+        return store.isGhost({
           row: this.row,
           col: this.col,
         });
@@ -46,6 +81,9 @@
       },
       removePreview() {
         dropIn.removePreview(this.col);
+      },
+      selectColumn() {
+        dropIn.selectColumn(this.col);
       },
     },
   };
