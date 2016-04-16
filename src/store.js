@@ -6,6 +6,10 @@ const store = {
     start: {
       rows: 6,
       columns: 6,
+      players: [
+        'A',
+        'B',
+      ],
     },
     ready: true,
     turn: 0,
@@ -36,6 +40,9 @@ const store = {
       return '';
     }
     return cell[0].player === 0 ? 'playerA' : 'playerB';
+  },
+  isActivePlayer(turn) {
+    return this.state.turn === turn;
   },
 };
 

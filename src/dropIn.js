@@ -51,7 +51,7 @@ const dropIn = {
               store.state.turn = 1 - store.state.turn;
             }
           }
-        }, 300);
+        }, 150);
       }
     }
   },
