@@ -1,7 +1,7 @@
 <template>
   <div class="cell" v-bind:class="{ 'selected': isSelected }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview" v-on:click="selectColumn">
-    <div class="active" v-if="isActive"></div>
-    <div class="ghost" v-if="isGhost"></div>
+    <div class="active" v-show="isActive" transition="fade" v-bind:class="playerClass"></div>
+    <div class="ghost" v-show="isGhost" transition="fade" v-bind:class="ghostClass"></div>
   </div>
 </template>
 <style>
@@ -13,27 +13,38 @@
   }
 
   .selected {
-    background: red;
+    background: grey;
   }
 
   .active {
     width: 30px;
     height: 30px;
-    background: black;
+
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
     margin: 5px;
   }
 
+  .playerA {
+    background: red;
+    border-color: red;
+  }
+
+  .playerB {
+    background: blue;
+    border-color: blue;
+  }
+
   .ghost {
     width: 30px;
     height: 30px;
-    border: 1px dotted black;
+    border: 1px dotted;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
     margin: 5px;
+    opacity: 0.5;
   }
 </style>
 <script>
@@ -74,6 +85,18 @@
           col: this.col,
         });
       },
+      playerClass() {
+        return store.cellPlayerClass({
+          row: this.row,
+          col: this.col,
+        });
+      },
+      ghostClass() {
+        return store.cellGhostClass({
+          row: this.row,
+          col: this.col,
+        });
+      },
     },
     methods: {
       previewColumn() {
@@ -83,7 +106,7 @@
         dropIn.removePreview(this.col);
       },
       selectColumn() {
-        dropIn.selectColumn(this.col);
+        dropIn.selectColumn(this.col, this.row);
       },
     },
   };
