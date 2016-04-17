@@ -45,7 +45,7 @@ const dropIn = {
               row: topCellRow - 1,
               col,
             }, store.state.turn)) {
-              alert('Winner');
+              store.playerIsWinner(store.state.start.players[store.state.turn]);
             } else {
               store.state.ready = true;
               store.state.turn = 1 - store.state.turn;
@@ -63,10 +63,19 @@ const dropIn = {
       };
     }
     function fourLine(c, offset1, offset2, offset3) {
-      return store.isActiveOfTurn(cellObj(c.row, c.col), turn)
+      const four = store.isActiveOfTurn(cellObj(c.row, c.col), turn)
         && store.isActiveOfTurn(cellObj(c.row + offset1[0], c.col + offset1[1]), turn)
         && store.isActiveOfTurn(cellObj(c.row + offset2[0], c.col + offset2[1]), turn)
         && store.isActiveOfTurn(cellObj(c.row + offset3[0], c.col + offset3[1]), turn);
+      if (four) {
+        store.state.win = [
+          cellObj(c.row, c.col),
+          cellObj(c.row + offset1[0], c.col + offset1[1]),
+          cellObj(c.row + offset2[0], c.col + offset2[1]),
+          cellObj(c.row + offset3[0], c.col + offset3[1]),
+        ];
+      }
+      return four;
     }
     function isWinnerY(c) {
       return fourLine(c, [1, 0], [2, 0], [3, 0]);
@@ -88,6 +97,21 @@ const dropIn = {
         || fourLine(c, [-3, 3], [-2, 2], [-1, 1]);
     }
     return isWinnerY(cell) || isWinnerX(cell) || isWinnerD(cell);
+  },
+  continue() {
+    store.state.active = [];
+    store.state.ghost = [];
+    store.state.ready = true;
+    store.state.turn = 1 - store.state.turn;
+    store.state.win = [];
+  },
+  reset() {
+    this.continue();
+    store.state.turn = 0;
+    store.state.scores = {
+      A: 0,
+      B: 0,
+    };
   },
 };
 

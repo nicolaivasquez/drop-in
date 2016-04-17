@@ -1,6 +1,7 @@
 <template>
   <div class="player" v-bind:class="{ 'active': isActive }">
     Player {{ player }}
+    <p class="score">{{ playerScore }}</p>
   </div>
 </template>
 <style scoped>
@@ -37,6 +38,9 @@
       },
       isActive() {
         return store.isActivePlayer(this.turnNumber);
+      },
+      playerScore() {
+        return store.getScorePlayer(this.player);
       },
     },
   };

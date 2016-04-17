@@ -1,5 +1,5 @@
 <template>
-  <div class="cell" v-bind:class="{ 'selected': isSelected }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview" v-on:click="selectColumn">
+  <div class="cell" v-bind:class="{ 'selected': isSelected, 'win': isWin }" v-on:mouseover="previewColumn" v-on:mouseout="removePreview" v-on:click="selectColumn">
     <div class="active" v-show="isActive" transition="fade" v-bind:class="playerClass"></div>
     <div class="ghost" v-show="isGhost" transition="fade" v-bind:class="ghostClass"></div>
   </div>
@@ -45,6 +45,10 @@
     border-radius: 15px;
     margin: 5px;
     opacity: 0.5;
+  }
+
+  .win {
+    background-color: yellow;
   }
 </style>
 <script>
@@ -93,6 +97,12 @@
       },
       ghostClass() {
         return store.cellGhostClass({
+          row: this.row,
+          col: this.col,
+        });
+      },
+      isWin() {
+        return store.winningCell({
           row: this.row,
           col: this.col,
         });

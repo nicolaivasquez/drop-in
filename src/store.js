@@ -13,6 +13,11 @@ const store = {
     },
     ready: true,
     turn: 0,
+    scores: {
+      A: 0,
+      B: 0,
+    },
+    win: [],
   },
   isSelected(obj) {
     return this.state.selected.filter(sel => sel.row === obj.row && sel.col === obj.col).length > 0;
@@ -43,6 +48,15 @@ const store = {
   },
   isActivePlayer(turn) {
     return this.state.turn === turn;
+  },
+  getScorePlayer(player) {
+    return this.state.scores[player];
+  },
+  playerIsWinner(player) {
+    this.state.scores[player] += 1;
+  },
+  winningCell(obj) {
+    return this.state.win.filter(sel => sel.row === obj.row && sel.col === obj.col).length > 0;
   },
 };
 
